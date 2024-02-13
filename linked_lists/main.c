@@ -11,6 +11,7 @@ struct node * insert_at_beggining(node * head, int val);
 void insert_at_end(node * head, int val);
 void print_list(node * head);
 struct node * remove_head(node * head);
+void remove_tail(node * head);
 
 int main(void) {
     node * head = (node *) malloc(sizeof(node));
@@ -40,6 +41,11 @@ int main(void) {
 
     print_list(head);
 
+    for (int i = 0; i <= 5; i++) {
+        remove_tail(head);
+    }
+
+    print_list(head);
     
     return 0;
 }
@@ -79,4 +85,16 @@ void print_list(node * head) {
 struct node * remove_head(node * head) {
     head = head->next;
     return head;
+}
+
+
+void remove_tail(node * head) {
+    node * current = (node *) malloc(sizeof(head));
+    node * last_current = (node *) malloc(sizeof(head));
+    current = head;
+    while (current->next != NULL) {
+        last_current = current;
+        current = current->next;
+    }
+    last_current->next = NULL;
 }
