@@ -12,6 +12,7 @@ void insert_at_end(node * head, int val);
 void print_list(node * head);
 struct node * remove_head(node * head);
 void remove_tail(node * head);
+void free_list(node * head);
 
 int main(void) {
     node * head = (node *) malloc(sizeof(node));
@@ -47,12 +48,18 @@ int main(void) {
 
     print_list(head);
     
+    free_list(head);
+
     return 0;
 }
 
 
 struct node * insert_at_beggining(node * head, int val) {
     node * new_node = (node *) malloc(sizeof(node));
+    if (new_node == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
     new_node->value = val;
     new_node->next = head;
     return new_node;
@@ -66,6 +73,10 @@ void insert_at_end(node * head, int val) {
     }
 
     current->next = (node *) malloc(sizeof(node));
+    if (current->next == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
     current->next->value = val;
     current->next->next = NULL;
 }
@@ -83,18 +94,37 @@ void print_list(node * head) {
 
 
 struct node * remove_head(node * head) {
+    node * last_head = head;
     head = head->next;
+    free(last_head);
     return head;
 }
 
 
 void remove_tail(node * head) {
-    node * current = (node *) malloc(sizeof(head));
-    node * last_current = (node *) malloc(sizeof(head));
-    current = head;
+    node * current = head;
+    node * last_current = NULL;
+
+    if (current == NULL) {
+        printf("Error: Empty list\n");
+        return;
+    }
+    
     while (current->next != NULL) {
         last_current = current;
         current = current->next;
     }
-    last_current->next = NULL;
+    if (last_current != NULL) {
+        last_current->next = NULL;
+        free(current);
+    }
+}
+
+
+void free_list(node * head) {
+    while (head != NULL) {
+        node * temp = head;
+        head = head->next;
+        free(temp);
+    }
 }
