@@ -10,6 +10,7 @@ typedef struct node {
 struct node * insert_at_beggining(node * head, int val);
 void insert_at_end(node * head, int val);
 void print_list(node * head);
+struct node * remove_head(node * head);
 
 int main(void) {
     node * head = (node *) malloc(sizeof(node));
@@ -25,11 +26,21 @@ int main(void) {
         insert_at_end(head, i);
     }
 
+    print_list(head);
+
     for (int j = 100; j >= 90; j--) {
         head = insert_at_beggining(head, j);
     }
 
     print_list(head);
+
+    for (int i = 0; i <= 10; i++) {
+        head = remove_head(head);
+    }
+
+    print_list(head);
+
+    
     return 0;
 }
 
@@ -62,4 +73,10 @@ void print_list(node * head) {
         current = current->next;
     }
     printf("NULL]\n");
+}
+
+
+struct node * remove_head(node * head) {
+    head = head->next;
+    return head;
 }
