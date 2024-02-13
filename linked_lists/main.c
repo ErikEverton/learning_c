@@ -7,6 +7,7 @@ typedef struct node {
 } node;
 
 
+struct node * insert_at_beggining(node * head, int val);
 void insert_at_end(node * head, int val);
 void print_list(node * head);
 
@@ -24,9 +25,21 @@ int main(void) {
         insert_at_end(head, i);
     }
 
+    for (int j = 100; j >= 90; j--) {
+        head = insert_at_beggining(head, j);
+    }
+
     print_list(head);
     return 0;
 }
+
+
+struct node * insert_at_beggining(node * head, int val) {
+    node * new_node = (node *) malloc(sizeof(node));
+    new_node->value = val;
+    new_node->next = head;
+    return new_node;
+} 
 
 
 void insert_at_end(node * head, int val) {
