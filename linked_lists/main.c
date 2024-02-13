@@ -7,8 +7,8 @@ typedef struct node {
 } node;
 
 
-void insert_at_end(node * head, int val); 
-
+void insert_at_end(node * head, int val);
+void print_list(node * head);
 
 int main(void) {
     node * head = (node *) malloc(sizeof(node));
@@ -20,11 +20,11 @@ int main(void) {
     head->value = 0;
     head->next = NULL;
 
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 11; i++) {
         insert_at_end(head, i);
     }
 
-    printf("the head value is %d\n", head->value);
+    print_list(head);
     return 0;
 }
 
@@ -38,4 +38,15 @@ void insert_at_end(node * head, int val) {
     current->next = (node *) malloc(sizeof(node));
     current->next->value = val;
     current->next->next = NULL;
+}
+
+
+void print_list(node * head) {
+    node * current = head;
+    printf("[");
+    while (current->next != NULL) {
+        printf("%d -> ", current->value);
+        current = current->next;
+    }
+    printf("NULL]\n");
 }
