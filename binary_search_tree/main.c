@@ -2,9 +2,11 @@
 #include <stdlib.h>
 
 typedef struct node {
-    int value;
+    int key;
     struct node *left, *right;
 } node;
+
+struct node * search(node * root, int target);
 
 
 int main(void) {
@@ -13,11 +15,34 @@ int main(void) {
         return 1;
     }
 
-    root->value = 10;
+    root->key = 10;
     root->left = NULL;
     root->right = NULL;
 
-    printf("The root value: %d\n", root->value);
+    printf("The root value: %d\n", root->key);
+
+    if (search(root, 11) != NULL) {
+        printf("There is that value\n");
+    } else {
+        printf("There isn't that value\n");
+    }
+
 
     return 0;
+}
+
+
+struct node * search(node * root, int target) {
+    node * current = root;
+    if (current == NULL || current->key == target) {
+        return root;
+    }
+
+    if (target > current->key) {
+        return search(current->right, target);
+    } else {
+        return search(current->left, target);
+    }
+
+    return NULL;
 }
