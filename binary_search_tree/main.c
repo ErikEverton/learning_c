@@ -51,7 +51,6 @@ int main(void) {
 
     printf("MAX: %d\n", max->key);
     free_tree(root);
-
     return 0;
 }
 
@@ -119,21 +118,16 @@ struct node * find_max(node * current) {
 
 
 struct node * free_tree(node * current) {
-    if (current->left == NULL && current->right == NULL) {
-        free(current);
+    if (current == NULL) {
         return NULL;
     }
 
-    if (current->left != NULL && current->right == NULL) {
-        free_tree(current->left);
-        free(current);
-    } else if (current->left == NULL && current->right != NULL) {
-        free_tree(current->right);
-        free(current);
-    } else {
-        return free_tree(current->left);
-    }
+    free_tree(current->left);
     
+    free_tree(current->right);
+
+    free(current);
+
     return NULL;
 }
 
